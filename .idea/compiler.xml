@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="1.7">
+      <module name="ScalioTestProject.app" target="11" />
+      <module name="ScalioTestProject.cache" target="11" />
+      <module name="ScalioTestProject.core" target="11" />
+      <module name="ScalioTestProject.github_ui" target="11" />
+      <module name="ScalioTestProject.remote" target="11" />
+      <module name="SearchGithubUsers.app" target="11" />
+      <module name="SearchGithubUsers.cache" target="11" />
+      <module name="SearchGithubUsers.core" target="11" />
+      <module name="SearchGithubUsers.github_ui" target="11" />
+      <module name="SearchGithubUsers.remote" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

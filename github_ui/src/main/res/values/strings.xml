@@ -1,0 +1,12 @@
+<resources>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_github_users_header">Search Github Users</string>
+    <string name="search_users">Search Users</string>
+
+    <string name="home_menu">Home</string>
+    <string name="favorites_menu">Favorite</string>
+    <string name="user_image">User Image</string>
+    <string name="no_results_hint">No Results, search for another user!</string>
+    <string name="empty_favorites">You have not favorited anything yet</string>
+</resources>

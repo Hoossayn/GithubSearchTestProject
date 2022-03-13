@@ -1,0 +1,107 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId rootProject.ext.applicationId
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    def appDependencies = rootProject.ext.appDependencies
+
+    def cacheDependencies = rootProject.ext
+    def remoteDependencies = rootProject.ext.remoteDependencies
+    def uiDependencies = rootProject.ext.uiDependencies
+    def testDependencies = rootProject.ext.testDependencies
+    def presentationDependencies = rootProject.ext
+
+    implementation(
+            appDependencies.kotlin,
+            appDependencies.androidKtx,
+            appDependencies.daggerHiltAndroid,
+            appDependencies.daggerHiltViewModel,
+            remoteDependencies.gson,
+            cacheDependencies.roomDependencies.roomDB,
+            uiDependencies.appCompat,
+            uiDependencies.material,
+            uiDependencies.androidLegacy,
+            remoteDependencies.retrofit,
+            remoteDependencies.retrofitConversion,
+            remoteDependencies.okHttpLoggingInterceptor,
+            remoteDependencies.okHttp,
+
+            project(":github_ui"),
+            project(":data"),
+            project(":domain"),
+            project(":cache"),
+            project(":core"),
+            project(":remote"),
+
+    )
+    kapt appDependencies.daggerCompiler
+    kapt appDependencies.daggerXcompiler
+    kapt cacheDependencies.roomDependencies.roomCompiler
+
+    androidTestImplementation(
+            presentationDependencies.testDependencies.espresso,
+
+            testDependencies.espressoContrib,
+            testDependencies.fragmentTesting,
+            testDependencies.rules,
+            testDependencies.testRunner,
+            testDependencies.archCoreTest,
+            testDependencies.hiltTesting,
+            testDependencies.truth,
+
+
+    )
+
+    kaptAndroidTest(
+            presentationDependencies.appDependencies.daggerXcompiler,
+            presentationDependencies.appDependencies.daggerCompiler,
+    )
+
+    testImplementation(
+            testDependencies.truth,
+            testDependencies.archCoreTest,
+            testDependencies.mockitoKotlin,
+            testDependencies.mockito,
+            testDependencies.coroutinesTest,
+            testDependencies.konveyor,
+            presentationDependencies.testDependencies.jUnit,
+            presentationDependencies.testDependencies.roboelectric,
+            presentationDependencies.testDependencies.jUnitX,
+            presentationDependencies.appDependencies.coroutines,
+
+
+    )
+}

@@ -1,0 +1,27 @@
+{
+  "total_count": 1,
+  "incomplete_results": false,
+  "items": [
+    {
+      "login": "pawnjester",
+      "id": 26750279,
+      "node_id": "MDQ6VXNlcjI2NzUwMjc5",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26750279?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/pawnjester",
+      "html_url": "https://github.com/pawnjester",
+      "followers_url": "https://api.github.com/users/pawnjester/followers",
+      "following_url": "https://api.github.com/users/pawnjester/following{/other_user}",
+      "gists_url": "https://api.github.com/users/pawnjester/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/pawnjester/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/pawnjester/subscriptions",
+      "organizations_url": "https://api.github.com/users/pawnjester/orgs",
+      "repos_url": "https://api.github.com/users/pawnjester/repos",
+      "events_url": "https://api.github.com/users/pawnjester/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/pawnjester/received_events",
+      "type": "User",
+      "site_admin": false,
+      "score": 1.0
+    }
+  ]
+}

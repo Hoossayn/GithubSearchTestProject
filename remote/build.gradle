@@ -1,0 +1,80 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+        buildConfigField("String", "API_KEY", localProperties['apikey'])
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    def remoteDependencies = rootProject.ext
+    def testDependencies = rootProject.ext.testDependencies
+
+    implementation(
+            remoteDependencies.appDependencies.daggerHiltViewModel,
+            remoteDependencies.appDependencies.daggerHiltAndroid,
+            remoteDependencies.appDependencies.javax,
+            remoteDependencies.appDependencies.kotlin,
+            remoteDependencies.appDependencies.androidKtx,
+
+            remoteDependencies.remoteDependencies.gson,
+            remoteDependencies.remoteDependencies.retrofit,
+            remoteDependencies.remoteDependencies.retrofitConversion,
+            remoteDependencies.remoteDependencies.okHttpLoggingInterceptor,
+            remoteDependencies.remoteDependencies.okHttp,
+            remoteDependencies.remoteDependencies.paging,
+            remoteDependencies.appDependencies.coroutines,
+
+
+            project(':data'),
+            project(':domain'),
+            project(':core'),
+    )
+    kapt remoteDependencies.appDependencies.daggerXcompiler
+    kapt remoteDependencies.roomDependencies.roomCompiler
+    api remoteDependencies.roomDependencies.roomRuntime
+    kapt remoteDependencies.appDependencies.daggerCompiler
+
+    testImplementation(
+            testDependencies.testRunner,
+            testDependencies.androidXTest,
+            testDependencies.androidXTestCore,
+            testDependencies.roboelectric,
+            testDependencies.truth,
+            testDependencies.mockWebServer
+    )
+}
