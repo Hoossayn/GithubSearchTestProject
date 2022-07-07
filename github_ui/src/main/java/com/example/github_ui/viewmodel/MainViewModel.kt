@@ -1,8 +1,11 @@
 package com.example.github_ui.viewmodel
 
 import androidx.lifecycle.*
+import com.example.domain.model.GithubRepoResponse
 import com.example.domain.usecases.*
+import com.example.github_ui.mappers.GithubRepoModelMapper
 import com.example.github_ui.mappers.GithubUsersModelMapper
+import com.example.github_ui.models.GithubRepoModel
 import com.example.github_ui.models.GithubUsersModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -14,10 +17,12 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val searchUsers: SearchUsersUseCase,
+    private val searchRepos: SearchRepoUseCase,
     private val loadMore: LoadMoreUsersUseCase,
     private val favoriteUserUseCase: FavoriteUserUseCase,
     private val deleteFavoritesUseCase: DeleteFavoriteUseCase,
     private val mapper: GithubUsersModelMapper,
+    private val repoMapper: GithubRepoModelMapper,
     private val checkFavoritesUseCase: CheckFavoriteStatusUseCase,
     private val getUsers: GetFavoriteUsersUseCase
 ) : ViewModel() {
@@ -25,7 +30,12 @@ class MainViewModel @Inject constructor(
     private val _users = MutableLiveData<LatestUiState<List<GithubUsersModel>>>()
     val users: LiveData<LatestUiState<List<GithubUsersModel>>> = _users
 
+    private val _repo =MutableLiveData<LatestUiState<List<GithubRepoModel>>>()
+    val repos: LiveData<LatestUiState<List<GithubRepoModel>>> = _repo
+
     private val usersList = mutableListOf<GithubUsersModel>()
+
+    private val repoList = mutableListOf<GithubRepoModel>()
 
     private var params: SearchUsersUseCase.Params? = null
 
@@ -64,6 +74,15 @@ class MainViewModel @Inject constructor(
         searchGithubUsers()
     }
 
+    fun setQueryInfoForRepo(query: String) {
+        if (query == lastQuery) return
+
+        query.also {
+            lastQuery = it
+        }
+        searchRepo()
+    }
+
     fun searchGithubUsers() {
         if (lastQuery.isNullOrEmpty()) return
 
@@ -86,6 +105,27 @@ class MainViewModel @Inject constructor(
                     usersList.clear()
                     usersList.addAll(it)
                     _users.value = LatestUiState.Success(usersList)
+                }
+        }
+    }
+
+    fun searchRepo(){
+        if (lastQuery.isNullOrEmpty()) return
+        _repo.value = LatestUiState.Loading
+
+        viewModelScope.launch {
+            searchRepos()
+                .catch{
+                    _repo.value = LatestUiState.Error("Cannot fetch repositories")
+                }
+                .map {
+                    count = it.size
+                    repoMapper.mapToModelList(it)
+                }
+                .collect {
+                    repoList.clear()
+                    repoList.addAll(it)
+                    _repo.value = LatestUiState.Success(repoList)
                 }
         }
     }

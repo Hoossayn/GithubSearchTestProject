@@ -8,6 +8,7 @@ import javax.inject.Inject
 class GithubResponseNetworkMapper @Inject constructor(
     private val mapper: RemoteNetworkModelMapper
 ) : RemoteModelMapper<GithubUsersNetworkResponse, GithubUserResponseEntity> {
+
     override fun mapFromModel(model: GithubUsersNetworkResponse): GithubUserResponseEntity {
         return model.run {
             GithubUserResponseEntity(

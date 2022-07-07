@@ -2,8 +2,10 @@ package com.example.data.impl
 
 import com.example.data.contracts.cache.GithubCache
 import com.example.data.contracts.remote.GithubRemote
+import com.example.data.mappers.GithubRepoEntityMapper
 import com.example.data.mappers.GithubUserEntityMapper
 import com.example.data.models.GithubUserEntity
+import com.example.domain.model.GithubRepoResponse
 import com.example.domain.model.GithubUser
 import com.example.domain.model.GithubUserResponse
 import com.example.domain.repositories.GithubUsersRepository
@@ -15,6 +17,7 @@ import javax.inject.Inject
 
 class GithubUsersRepositoryImpl @Inject constructor(
     private val mapper: GithubUserEntityMapper,
+    private val repoMapper: GithubRepoEntityMapper,
     private val usersRemote: GithubRemote,
     private val usersCache: GithubCache
 ) : GithubUsersRepository {
@@ -27,6 +30,15 @@ class GithubUsersRepositoryImpl @Inject constructor(
                     mapper.mapFromEntity(entity)
                 }
                 GithubUserResponse(it.total_count, mapper.mapFromEntityList(it.items))
+            })
+        }
+    }
+
+    override fun searchRepositories(): Flow<List<GithubRepoResponse>> {
+        return flow {
+            emitAll(usersRemote.searchRepositories().map {
+                repoMapper.mapFromEntityList(it)
+
             })
         }
     }

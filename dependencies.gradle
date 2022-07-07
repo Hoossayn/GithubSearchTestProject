@@ -1,6 +1,6 @@
 ext {
     kotlinVersion = "1.4.30"
-    roomDBVersion = "2.3.0-alpha02"
+    roomDBVersion = "2.4.0-alpha03"
     androidKTxVersion = "1.3.2"
     lottieVersion = "2.8.0"
     daggerHiltVersion = "1.0.0-alpha03"

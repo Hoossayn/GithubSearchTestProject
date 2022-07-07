@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.navigation_home -> bottomNavigationView.visibility = View.VISIBLE
                 R.id.navigation_favorite -> bottomNavigationView.visibility = View.VISIBLE
+                R.id.repositoriesFragment -> bottomNavigationView.visibility = View.VISIBLE
+                R.id.usersFragment -> bottomNavigationView.visibility = View.VISIBLE
                 else -> bottomNavigationView.visibility = View.GONE
             }
         }

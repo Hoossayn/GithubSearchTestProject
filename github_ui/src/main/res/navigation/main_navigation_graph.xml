@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_favorite"
             app:destination="@id/navigation_detail" />
+        <action android:id="@+id/action_navigation_home_to_repositoriesFragment"
+                app:destination="@id/repositoriesFragment"/>
+        <action android:id="@+id/action_navigation_home_to_usersFragment" app:destination="@id/usersFragment"/>
     </fragment>
 
 
@@ -36,5 +39,11 @@
         <action
             android:id="@+id/action_favoriteUserFragment_to_navigation_favorite"
             app:destination="@id/navigation_detail" />
+    </fragment>
+    <fragment android:id="@+id/repositoriesFragment" android:name="com.example.github_ui.RepositoriesFragment"
+              android:label="fragment_repositories" tools:layout="@layout/fragment_repositories"/>
+    <fragment android:id="@+id/usersFragment" android:name="com.example.github_ui.UsersFragment"
+              android:label="fragment_users" tools:layout="@layout/fragment_users">
+        <action android:id="@+id/action_usersFragment_to_navigation_detail" app:destination="@id/navigation_detail"/>
     </fragment>
 </navigation>

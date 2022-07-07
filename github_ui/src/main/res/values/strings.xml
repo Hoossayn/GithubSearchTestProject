@@ -2,11 +2,18 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_github_users_header">Search Github Users</string>
-    <string name="search_users">Search Users</string>
+    <string name="search_users">Search For users…</string>
 
     <string name="home_menu">Home</string>
     <string name="favorites_menu">Favorite</string>
     <string name="user_image">User Image</string>
     <string name="no_results_hint">No Results, search for another user!</string>
     <string name="empty_favorites">You have not favorited anything yet</string>
+    <string name="repositories">Repositories</string>
+    <string name="users">Users</string>
+    <string name="home">Home</string>
+    <string name="search_github_for_users">Search Github for users…</string>
+    <string name="search_github_for_repos">Search Github for repositories, issues and pull requests!</string>
+    <string name="github_users_not_found">We’ve searched the ends of the earth and we’ve not found this user, please try again</string>
+    <string name="search_for_repositories">Search for Repositories</string>
 </resources>

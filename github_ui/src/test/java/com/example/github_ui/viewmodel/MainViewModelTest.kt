@@ -80,13 +80,13 @@ class MainViewModelTest {
     fun `search users`() {
         sut.users.observeForever(uiObserver)
 
-        val params = SearchUsersUseCase.Params("pawnjester", 1)
+        val params = SearchUsersUseCase.Params("hoossayn", 1)
         Mockito.`when`(searchUsers(params)).thenReturn(
             flow {
                 emit(makeGithubUserResponse())
             }
         )
-        sut.setQueryInfo("pawnjester")
+        sut.setQueryInfo("hoossayn")
         Mockito.verify(uiObserver, times(2)).onChanged(captorUI.capture())
     }
 

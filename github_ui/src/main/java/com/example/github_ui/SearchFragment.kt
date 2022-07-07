@@ -33,87 +33,16 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecyclerView()
 
-        lifecycleScope.launchWhenStarted {
-            binding.searchGithubEditText.textChange()
-                .debounce(1000)
-                .collect {
-                    if (it?.length!! >= 2) {
-                        viewModel.setQueryInfo(it.toString())
-                    }
-                }
+        binding.users.setOnClickListener {
+            val userAction  = SearchFragmentDirections.actionNavigationHomeToUsersFragment()
+            findNavController().navigate(userAction)
         }
 
-
-        lifecycleScope.launchWhenStarted {
-            binding.rvGithubUsers.observeRecycler()
-                .collect {
-                    if (it) {
-                        viewModel.fetchMoreUsers()
-                    }
-                }
+        binding.repos.setOnClickListener {
+            val repoAction = SearchFragmentDirections.actionNavigationHomeToRepositoriesFragment()
+            findNavController().navigate(repoAction)
         }
 
-        binding.swipeRefresh.setOnRefreshListener {
-            viewModel.searchGithubUsers()
-        }
-        usersAdapter.openUsersCallback = {
-            val action = SearchFragmentDirections.actionNavigationHomeToNavigationFavorite(it)
-            findNavController().navigate(action)
-        }
-
-        usersAdapter.favoriteUsersCallback = { user ->
-            viewModel.favoriteUser(user)
-        }
-
-        observe(viewModel.users, ::subscribeToUi)
-        observe(viewModel.isLoadingMore, ::observeLoading)
-    }
-
-    private fun setupRecyclerView() {
-        binding.rvGithubUsers.apply {
-            layoutManager = LinearLayoutManager(
-                requireContext(), RecyclerView.VERTICAL, false
-            )
-            addItemDecoration(MarginItemDecoration(16))
-            adapter = usersAdapter
-        }
-    }
-
-    private fun subscribeToUi(users: LatestUiState<List<GithubUsersModel>>?) {
-        users?.let {
-            when (it) {
-                is LatestUiState.Loading -> {
-                    binding.shimmerRecycler.show(true)
-                    binding.shimmerRecycler.startShimmer()
-                    binding.rvGithubUsers.show(false)
-                    binding.swipeRefresh.isRefreshing = false
-                }
-                is LatestUiState.Success -> {
-                    binding.shimmerRecycler.stopShimmer()
-                    binding.shimmerRecycler.show(false)
-                    binding.rvGithubUsers.show(true)
-                    usersAdapter.setUsers(it.users)
-                    binding.swipeRefresh.isRefreshing = false
-                }
-                is LatestUiState.Error -> {
-                    requireContext().showToast(it.exception, Toast.LENGTH_LONG)
-                    binding.loadMore.show(false)
-                    binding.shimmerRecycler.show(false)
-                    binding.swipeRefresh.isRefreshing = false
-                }
-            }
-        }
-    }
-
-    private fun observeLoading(isLoading: Boolean?) {
-        isLoading?.let {
-            if (it) {
-                binding.loadMore.show(true)
-            } else {
-                binding.loadMore.show(false)
-            }
-        }
     }
 }

@@ -41,7 +41,7 @@ interface NetworkModule {
         @Provides
         fun providesRetrofitBuilder(client: OkHttpClient): Retrofit {
             return Retrofit.Builder()
-                .baseUrl("https://api.github.com/search/")
+                .baseUrl("https://api.github.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
